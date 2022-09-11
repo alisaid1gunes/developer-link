@@ -6,11 +6,12 @@ import configuration from '../config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import {UsersModule} from "./users/users.module";
-import {User} from "./users/entities/user.entity";
-import {Profile} from "./users/entities/profile.entity";
-import {RefreshToken} from "./users/entities/refreshtoken.entity";
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
+import { Profile } from './users/entities/profile.entity';
+import { RefreshToken } from './users/entities/refreshtoken.entity';
 import { LinksModule } from './links/links.module';
+import { Link } from './links/entities/link.entity';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { LinksModule } from './links/links.module';
       username: configuration().database.username,
       password: configuration().database.password,
       database: configuration().database.name,
-      entities: [User, Profile, RefreshToken],
+      entities: [User, Profile, RefreshToken, Link],
       synchronize: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

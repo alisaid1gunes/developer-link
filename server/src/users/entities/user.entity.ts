@@ -1,15 +1,17 @@
-import { ObjectType, Field, Int,} from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from "typeorm";
-import {Profile} from "./profile.entity";
-import {RefreshToken} from "./refreshtoken.entity";
+  UpdateDateColumn,
+} from 'typeorm';
+import { Profile } from './profile.entity';
+import { RefreshToken } from './refreshtoken.entity';
+import { Link } from '../../links/entities/link.entity';
 
 @ObjectType()
 @Entity()
@@ -33,11 +35,16 @@ export class User {
   @Field(() => Profile, { description: 'user profile' })
   @OneToOne(() => Profile)
   @JoinColumn()
-  profile: Profile
+  profile: Profile;
 
   @Field(() => RefreshToken, { description: 'user refresh token' })
   @OneToOne(() => RefreshToken)
   @JoinColumn()
+  refreshToken: RefreshToken;
+
+  @Field(() => Link, { description: 'links of the user' })
+  @OneToMany(() => Link, (link) => link.user)
+  links: Link[];
 
   @Field(() => Date, { description: 'create date of the entity' })
   @CreateDateColumn()

@@ -27,6 +27,43 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type RefreshToken {
+  """Id of the entity"""
+  id: Int!
+
+  """token of the entity"""
+  token: String!
+}
+
+type Link {
+  """id of the link"""
+  id: Int!
+
+  """title of the link"""
+  title: String!
+
+  """url of the link"""
+  url: String!
+
+  """order of the link"""
+  order: Int!
+
+  """activation status of the link"""
+  active: Boolean!
+
+  """image url of the link"""
+  image: String!
+
+  """description of the link"""
+  user: User!
+
+  """create date of the link"""
+  createdAt: DateTime!
+
+  """update date of the link"""
+  updatedAt: DateTime!
+}
+
 type User {
   """Id of the entity"""
   id: Int!
@@ -43,16 +80,17 @@ type User {
   """user profile"""
   profile: Profile!
 
+  """user refresh token"""
+  refreshToken: RefreshToken!
+
+  """links of the user"""
+  links: Link!
+
   """create date of the entity"""
   createdAt: DateTime!
 
   """update date of the entity"""
   updatedAt: DateTime!
-}
-
-type Link {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }
 
 type Query {
