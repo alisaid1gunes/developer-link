@@ -110,12 +110,29 @@ type View {
   updatedAt: DateTime!
 }
 
+type Click {
+  """id of the click"""
+  id: Int!
+
+  """date of the click"""
+  clickDate: DateTime!
+
+  """create date of the click"""
+  createdAt: DateTime!
+
+  """update date of the click"""
+  updatedAt: DateTime!
+}
+
 type Statistic {
   """id of the statistic"""
   id: Int!
 
   """views of the statistic"""
   views: [View!]!
+
+  """clicks of the statistic"""
+  clicks: [Click!]!
 
   """create date of the statistic"""
   createdAt: DateTime!
