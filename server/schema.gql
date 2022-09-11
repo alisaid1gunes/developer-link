@@ -2,7 +2,55 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Profile {
+  """Id of the entity"""
+  id: Int!
+
+  """this is a url"""
+  photo: String!
+
+  """user biography"""
+  bio: String!
+
+  """user profile title"""
+  profileTitle: String!
+
+  """user profile create date"""
+  createdAt: DateTime!
+
+  """user profile update date"""
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type User {
+  """Id of the entity"""
+  id: Int!
+
+  """Name of the entity"""
+  name: String!
+
+  """Email of the entity"""
+  email: String!
+
+  """Password of the entity"""
+  password: String!
+
+  """user profile"""
+  profile: Profile!
+
+  """create date of the entity"""
+  createdAt: DateTime!
+
+  """update date of the entity"""
+  updatedAt: DateTime!
+}
+
+type Link {
   """Example field (placeholder)"""
   exampleField: Int!
 }
@@ -10,20 +58,48 @@ type User {
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  links: [Link!]!
+  link(id: Int!): Link!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createLink(createLinkInput: CreateLinkInput!): Link!
+  updateLink(updateLinkInput: UpdateLinkInput!): Link!
+  removeLink(id: Int!): Link!
 }
 
 input CreateUserInput {
+  """Name of the entity"""
+  name: String!
+
+  """Email of the entity"""
+  email: String!
+
+  """Password of the entity"""
+  password: String!
+}
+
+input UpdateUserInput {
+  """Name of the entity"""
+  name: String
+
+  """Email of the entity"""
+  email: String
+
+  """Password of the entity"""
+  password: String
+  id: Int!
+}
+
+input CreateLinkInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdateUserInput {
+input UpdateLinkInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
