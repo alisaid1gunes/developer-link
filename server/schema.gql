@@ -93,12 +93,35 @@ type User {
   updatedAt: DateTime!
 }
 
+type View {
+  """id of the view"""
+  id: Int!
+
+  """date of the view"""
+  date: DateTime!
+
+  """Statistic of the view"""
+  statistic: Link!
+
+  """create date of the view"""
+  createdAt: DateTime!
+
+  """update date of the view"""
+  updatedAt: DateTime!
+}
+
 type Statistic {
   """id of the statistic"""
   id: Int!
 
-  """title of the statistic"""
-  title: String!
+  """views of the statistic"""
+  views: [View!]!
+
+  """create date of the statistic"""
+  createdAt: DateTime!
+
+  """update date of the statistic"""
+  updatedAt: DateTime!
 }
 
 type Query {

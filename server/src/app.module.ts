@@ -14,6 +14,7 @@ import { LinksModule } from './links/links.module';
 import { Link } from './links/entities/link.entity';
 import { StatisticsModule } from './statistics/statistics.module';
 import { Statistic } from './statistics/entities/statistic.entity';
+import { View } from './statistics/entities/view.entity';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { Statistic } from './statistics/entities/statistic.entity';
       username: configuration().database.username,
       password: configuration().database.password,
       database: configuration().database.name,
-      entities: [User, Profile, RefreshToken, Link, Statistic],
+      entities: [User, Profile, RefreshToken, Link, Statistic, View],
       synchronize: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
