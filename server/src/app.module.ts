@@ -12,6 +12,7 @@ import { Profile } from './users/entities/profile.entity';
 import { RefreshToken } from './users/entities/refreshtoken.entity';
 import { LinksModule } from './links/links.module';
 import { Link } from './links/entities/link.entity';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { Link } from './links/entities/link.entity';
       autoSchemaFile: 'schema.gql',
     }),
     LinksModule,
+    StatisticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

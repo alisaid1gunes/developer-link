@@ -93,11 +93,21 @@ type User {
   updatedAt: DateTime!
 }
 
+type Statistic {
+  """id of the statistic"""
+  id: Int!
+
+  """title of the statistic"""
+  title: String!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
   links: [Link!]!
   link(id: Int!): Link!
+  statistics: [Statistic!]!
+  statistic(id: Int!): Statistic!
 }
 
 type Mutation {
@@ -107,6 +117,9 @@ type Mutation {
   createLink(createLinkInput: CreateLinkInput!): Link!
   updateLink(updateLinkInput: UpdateLinkInput!): Link!
   removeLink(id: Int!): Link!
+  createStatistic(createStatisticInput: CreateStatisticInput!): Statistic!
+  updateStatistic(updateStatisticInput: UpdateStatisticInput!): Statistic!
+  removeStatistic(id: Int!): Statistic!
 }
 
 input CreateUserInput {
@@ -138,6 +151,17 @@ input CreateLinkInput {
 }
 
 input UpdateLinkInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateStatisticInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateStatisticInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
