@@ -3,50 +3,56 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { View } from '../../statistics/entities/view.entity';
+import { ApiProperty } from '@nestjs/swagger';
 @Entity()
 @ObjectType()
 export class Link {
+  @ApiProperty()
   @Field(() => Int, { description: 'id of the link' })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty()
   @Field(() => String, { description: 'title of the link' })
   @Column()
   title: string;
 
+  @ApiProperty()
   @Field(() => String, { description: 'url of the link' })
   @Column()
   url: string;
 
+  @ApiProperty()
   @Field(() => Int, { description: 'order of the link' })
   @Column()
   order: number;
 
+  @ApiProperty()
   @Field(() => Boolean, { description: 'activation status of the link' })
   @Column()
   active: boolean;
 
-  @Field(() => String, { description: 'image url of the link' })
+  @ApiProperty()
+  @Field(() => String, { description: 'image url of the link', nullable: true })
   @Column()
-  image: string;
+  image?: string;
 
+  @ApiProperty()
   @Field(() => User, { description: 'description of the link' })
   @ManyToOne(() => User, (user) => user.links)
   user: User;
 
+  @ApiProperty()
   @Field(() => Date, { description: 'create date of the link' })
   @CreateDateColumn()
   createdAt: Date;
 
+  @ApiProperty()
   @Field(() => Date, { description: 'update date of the link' })
   @UpdateDateColumn()
   updatedAt: Date;

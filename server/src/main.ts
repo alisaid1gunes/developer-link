@@ -1,6 +1,7 @@
-import {AppModule} from "./app.module";
-import {NestFactory} from "@nestjs/core";
-import configuration from "../config/configuration";
+import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core';
+import configuration from '../config/configuration';
+import { AppClusterService } from './app.cluster.service';
 
 declare const module: any;
 
