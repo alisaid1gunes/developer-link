@@ -2,8 +2,6 @@ import { CreateLinkInput } from './create-link.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 import { IsBoolean, IsNumber, IsString, IsUrl } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, ManyToOne } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
 
 @InputType()
 export class UpdateLinkInput extends PartialType(CreateLinkInput) {

@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
 import {
   CreateDateColumn,
   Entity,
@@ -10,6 +10,7 @@ import { Click } from './click.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
+@InputType('ST')
 @ObjectType()
 export class Statistic {
   @ApiProperty()

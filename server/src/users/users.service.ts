@@ -4,14 +4,13 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { FileUpload } from 'graphql-upload';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private recipesRepository: Repository<User>,
   ) {}
-  create(createUserInput: CreateUserInput, file: FileUpload) {
+  create(createUserInput: CreateUserInput) {
     return this.recipesRepository.save(createUserInput);
   }
 

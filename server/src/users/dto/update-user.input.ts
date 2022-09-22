@@ -1,5 +1,4 @@
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
-import { Profile } from '../entities/profile.entity';
+import { InputType, Field } from '@nestjs/graphql';
 import { IsEmail, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -7,15 +6,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class UpdateUserInput {
   @ApiProperty()
   @MinLength(3)
-  @Field(() => String, { nullable: true })
-  name?: string;
+  @Field(() => String, { description: 'username of the user', nullable: true })
+  username?: string;
 
   @ApiProperty()
   @IsEmail()
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { description: 'email of the user', nullable: true })
   email?: string;
-
-  @ApiProperty()
-  @Field(() => Profile, { nullable: true })
-  profile?: Profile;
 }

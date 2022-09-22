@@ -3,14 +3,18 @@ import { LinksService } from './links.service';
 import { Link } from './entities/link.entity';
 import { CreateLinkInput } from './dto/create-link.input';
 import { UpdateLinkInput } from './dto/update-link.input';
+import { PhotoFileInput } from '../profiles/dto/photo-file.input';
 
 @Resolver(() => Link)
 export class LinksResolver {
   constructor(private readonly linksService: LinksService) {}
 
   @Mutation(() => Link)
-  createLink(@Args('createLinkInput') createLinkInput: CreateLinkInput) {
-    return this.linksService.create(createLinkInput);
+  createLink(
+    @Args('createLinkInput') createLinkInput: CreateLinkInput,
+    @Args('createLinkInput') photoFileInput: PhotoFileInput,
+  ) {
+    return this.linksService.create(createLinkInput, photoFileInput);
   }
 
   @Query(() => [Link], { name: 'links' })
@@ -24,8 +28,12 @@ export class LinksResolver {
   }
 
   @Mutation(() => Link)
-  updateLink(@Args('updateLinkInput') updateLinkInput: UpdateLinkInput) {
-    return this.linksService.update(updateLinkInput.id, updateLinkInput);
+  updateLink(
+    @Args('id', { type: () => Int }) id: number,
+    @Args('updateLinkInput') updateLinkInput: UpdateLinkInput,
+    @Args('photoFileInput') photoFileInput: PhotoFileInput,
+  ) {
+    return this.linksService.update(id, updateLinkInput, photoFileInput);
   }
 
   @Mutation(() => Link)

@@ -31,6 +31,6 @@ export class CreateLinkInput {
   image?: string;
 
   @ApiProperty()
-  @Field(() => User, { description: 'description of the link' })
+  @Field(() => User, { description: 'user id of the link' })
   user: User;
 }

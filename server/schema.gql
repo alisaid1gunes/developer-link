@@ -2,31 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Profile {
-  """Id of the entity"""
-  id: Int!
-
-  """this is a url"""
-  photo: String!
-
-  """user biography"""
-  bio: String!
-
-  """user profile title"""
-  profileTitle: String!
-
-  """user profile create date"""
-  createdAt: DateTime!
-
-  """user profile update date"""
-  updatedAt: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type RefreshToken {
   """Id of the entity"""
   id: Int!
@@ -52,9 +27,9 @@ type Link {
   active: Boolean!
 
   """image url of the link"""
-  image: String!
+  image: String
 
-  """description of the link"""
+  """user of the link"""
   user: User!
 
   """create date of the link"""
@@ -64,12 +39,43 @@ type Link {
   updatedAt: DateTime!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Profile {
+  """Id of the profile"""
+  id: Int!
+
+  """firstName of the user"""
+  firstName: String
+
+  """lastName of the user"""
+  lastName: String
+
+  """this is a url"""
+  photo: String
+
+  """user biography"""
+  bio: String
+
+  """user profile title"""
+  profileTitle: String
+
+  """user profile create date"""
+  createdAt: DateTime!
+
+  """user profile update date"""
+  updatedAt: DateTime!
+}
+
 type User {
   """Id of the entity"""
   id: Int!
 
-  """Name of the entity"""
-  name: String!
+  """userName of the entity"""
+  username: String!
 
   """Email of the entity"""
   email: String!
@@ -78,13 +84,13 @@ type User {
   password: String!
 
   """user profile"""
-  profile: Profile!
+  profile: Profile
 
   """user refresh token"""
-  refreshToken: RefreshToken!
+  refreshToken: RefreshToken
 
   """links of the user"""
-  links: Link!
+  links: [Link!]
 
   """create date of the entity"""
   createdAt: DateTime!
@@ -129,10 +135,150 @@ type Statistic {
   id: Int!
 
   """views of the statistic"""
-  views: [View!]!
+  views: [View!]
 
   """clicks of the statistic"""
-  clicks: [Click!]!
+  clicks: [Click!]
+
+  """create date of the statistic"""
+  createdAt: DateTime!
+
+  """update date of the statistic"""
+  updatedAt: DateTime!
+}
+
+input REF {
+  """Id of the entity"""
+  id: Int!
+
+  """token of the entity"""
+  token: String!
+}
+
+input LIN {
+  """id of the link"""
+  id: Int!
+
+  """title of the link"""
+  title: String!
+
+  """url of the link"""
+  url: String!
+
+  """order of the link"""
+  order: Int!
+
+  """activation status of the link"""
+  active: Boolean!
+
+  """image url of the link"""
+  image: String
+
+  """user of the link"""
+  user: US!
+
+  """create date of the link"""
+  createdAt: DateTime!
+
+  """update date of the link"""
+  updatedAt: DateTime!
+}
+
+input PR {
+  """Id of the profile"""
+  id: Int!
+
+  """firstName of the user"""
+  firstName: String
+
+  """lastName of the user"""
+  lastName: String
+
+  """this is a url"""
+  photo: String
+
+  """user biography"""
+  bio: String
+
+  """user profile title"""
+  profileTitle: String
+
+  """user profile create date"""
+  createdAt: DateTime!
+
+  """user profile update date"""
+  updatedAt: DateTime!
+}
+
+input US {
+  """Id of the entity"""
+  id: Int!
+
+  """userName of the entity"""
+  username: String!
+
+  """Email of the entity"""
+  email: String!
+
+  """Password of the entity"""
+  password: String!
+
+  """user profile"""
+  profile: PR
+
+  """user refresh token"""
+  refreshToken: REF
+
+  """links of the user"""
+  links: [LIN!]
+
+  """create date of the entity"""
+  createdAt: DateTime!
+
+  """update date of the entity"""
+  updatedAt: DateTime!
+}
+
+input VI {
+  """id of the view"""
+  id: Int!
+
+  """date of the view"""
+  date: DateTime!
+
+  """Statistic of the view"""
+  statistic: LIN!
+
+  """create date of the view"""
+  createdAt: DateTime!
+
+  """update date of the view"""
+  updatedAt: DateTime!
+}
+
+input CL {
+  """id of the click"""
+  id: Int!
+
+  """date of the click"""
+  clickDate: DateTime!
+
+  """create date of the click"""
+  createdAt: DateTime!
+
+  """update date of the click"""
+  updatedAt: DateTime!
+}
+
+input ST {
+  """id of the statistic"""
+  id: Int!
+
+  """views of the statistic"""
+  views: [VI!]
+
+  """clicks of the statistic"""
+  clicks: [CL!]
 
   """create date of the statistic"""
   createdAt: DateTime!
@@ -148,23 +294,28 @@ type Query {
   link(id: Int!): Link!
   statistics: [Statistic!]!
   statistic(id: Int!): Statistic!
+  profiles: [Profile!]!
+  profile(id: Int!): Profile!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createLink(createLinkInput: CreateLinkInput!): Link!
-  updateLink(updateLinkInput: UpdateLinkInput!): Link!
+  createLink(createLinkInput: PhotoFileInput!): Link!
+  updateLink(id: Int!, updateLinkInput: UpdateLinkInput!, photoFileInput: PhotoFileInput!): Link!
   removeLink(id: Int!): Link!
   createStatistic(createStatisticInput: CreateStatisticInput!): Statistic!
   updateStatistic(updateStatisticInput: UpdateStatisticInput!): Statistic!
   removeStatistic(id: Int!): Statistic!
+  createProfile(createProfileInput: CreateProfileInput!, updateProfileInput: PhotoFileInput!): Profile!
+  updateProfile(id: Int!, updateProfileInput: PhotoFileInput!): Profile!
+  removeProfile(id: Int!): Profile!
 }
 
 input CreateUserInput {
-  """Name of the entity"""
-  name: String!
+  """username of the entity"""
+  username: String!
 
   """Email of the entity"""
   email: String!
@@ -174,35 +325,68 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  """Name of the entity"""
-  name: String
+  """username of the user"""
+  username: String
 
-  """Email of the entity"""
+  """email of the user"""
   email: String
-
-  """Password of the entity"""
-  password: String
-  id: Int!
 }
 
-input CreateLinkInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input PhotoFileInput {
+  """photo"""
+  image: String
 }
 
 input UpdateLinkInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """title of the link"""
+  title: String
+
+  """url of the link"""
+  url: String
+
+  """order of the link"""
+  order: Int
+
+  """activation status of the link"""
+  active: Boolean
+
+  """image url of the link"""
+  image: String
+
+  """user id of the link"""
+  user: US
 }
 
 input CreateStatisticInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """views of the statistic"""
+  views: [VI!]
+
+  """clicks of the statistic"""
+  clicks: [CL!]
 }
 
 input UpdateStatisticInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """views of the statistic"""
+  views: [VI!]
+
+  """clicks of the statistic"""
+  clicks: [CL!]
   id: Int!
+}
+
+input CreateProfileInput {
+  """firstName of the user"""
+  firstName: String
+
+  """lastName of the user"""
+  lastName: String
+
+  """profile photo"""
+  photo: String
+
+  """user biography"""
+  bio: String
+
+  """user profile title"""
+  profileTitle: String
 }

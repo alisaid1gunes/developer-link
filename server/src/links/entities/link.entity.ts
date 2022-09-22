@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -9,8 +9,10 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
-@Entity()
+
 @ObjectType()
+@InputType('LIN')
+@Entity()
 export class Link {
   @ApiProperty()
   @Field(() => Int, { description: 'id of the link' })
@@ -43,7 +45,7 @@ export class Link {
   image?: string;
 
   @ApiProperty()
-  @Field(() => User, { description: 'description of the link' })
+  @Field(() => User, { description: 'user of the link' })
   @ManyToOne(() => User, (user) => user.links)
   user: User;
 

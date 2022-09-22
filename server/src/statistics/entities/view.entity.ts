@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -11,6 +11,7 @@ import { Link } from '../../links/entities/link.entity';
 import { Statistic } from './statistic.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
+@InputType('VI')
 @ObjectType()
 @Entity()
 export class View {

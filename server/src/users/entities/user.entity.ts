@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -9,12 +9,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Profile } from './profile.entity';
 import { RefreshToken } from './refreshtoken.entity';
 import { Link } from '../../links/entities/link.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Profile } from '../../profiles/entities/profile.entity';
 
 @ObjectType()
+@InputType('US')
 @Entity()
 export class User {
   @ApiProperty()
@@ -23,9 +24,9 @@ export class User {
   id: number;
 
   @ApiProperty()
-  @Field(() => String, { description: 'Name of the entity' })
+  @Field(() => String, { description: 'userName of the entity' })
   @Column()
-  name: string;
+  username: string;
 
   @ApiProperty()
   @Field(() => String, { description: 'Email of the entity' })
@@ -48,13 +49,12 @@ export class User {
     description: 'user refresh token',
     nullable: true,
   })
-  @ApiProperty()
   @OneToOne(() => RefreshToken)
   @JoinColumn()
   refreshToken?: RefreshToken;
 
   @ApiProperty()
-  @Field(() => Link, { description: 'links of the user', nullable: true })
+  @Field(() => [Link], { description: 'links of the user', nullable: true })
   @OneToMany(() => Link, (link) => link.user)
   links?: Link[];
 

@@ -1,26 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateLinkInput } from './dto/create-link.input';
 import { UpdateLinkInput } from './dto/update-link.input';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Link } from './entities/link.entity';
+import { PhotoFileInput } from '../profiles/dto/photo-file.input';
 
 @Injectable()
 export class LinksService {
-  create(createLinkInput: CreateLinkInput) {
-    return 'This action adds a new link';
+  constructor(
+    @Inject('Cloudinary')
+    private readonly cloudinaryService: CloudinaryService,
+    @InjectRepository(Link)
+    private readonly linkRepository: Repository<Link>,
+  ) {}
+  async create(
+    createLinkInput: CreateLinkInput,
+    photoFileInput: PhotoFileInput,
+  ) {
+    const { image } = photoFileInput;
+    if (image) {
+      const { url } = await this.cloudinaryService.uploadImage(image);
+      createLinkInput.image = url;
+    }
+    return await this.linkRepository.save(createLinkInput);
   }
 
-  findAll() {
-    return `This action returns all links`;
+  async findAll() {
+    return await this.linkRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} link`;
+  async findOne(id: number) {
+    return await this.linkRepository.findOneBy({ id });
   }
 
-  update(id: number, updateLinkInput: UpdateLinkInput) {
-    return `This action updates a #${id} link`;
+  async update(
+    id: number,
+    updateLinkInput: UpdateLinkInput,
+    photoFileInput: PhotoFileInput,
+  ) {
+    const link = await this.linkRepository.findOneBy({ id });
+    if (link) {
+      const { image } = photoFileInput;
+      if (image) {
+        const { url } = await this.cloudinaryService.uploadImage(image);
+        updateLinkInput.image = url;
+      }
+      return await this.linkRepository.save({
+        ...link,
+        ...updateLinkInput,
+      });
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} link`;
+  async remove(id: number) {
+    return await this.linkRepository.delete(id);
   }
 }
