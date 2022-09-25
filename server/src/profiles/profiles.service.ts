@@ -1,27 +1,25 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
 import { Profile } from './entities/profile.entity';
-import { PhotoFileInput } from './dto/photo-file.input';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileUpload } from 'graphql-upload';
 
 @Injectable()
 export class ProfilesService {
   constructor(
-    @Inject('Cloudinary')
     private readonly cloudinaryService: CloudinaryService,
     @InjectRepository(Profile)
     private readonly profilesRepository: Repository<Profile>,
   ) {}
   async create(
     createProfileInput: CreateProfileInput,
-    photoFileInput: PhotoFileInput,
+    photoFileInput: FileUpload,
   ) {
-    const { image } = photoFileInput;
-    if (image) {
-      const { url } = await this.cloudinaryService.uploadImage(image);
+    if (photoFileInput) {
+      const { url } = await this.cloudinaryService.uploadImage(photoFileInput);
       createProfileInput.photo = url;
     }
     return await this.profilesRepository.save(createProfileInput);
@@ -38,13 +36,14 @@ export class ProfilesService {
   async update(
     id: number,
     updateProfileInput: UpdateProfileInput,
-    photoFileInput: PhotoFileInput,
+    photoFileInput: FileUpload,
   ) {
     const user = await this.profilesRepository.findOneBy({ id });
     if (user) {
-      const { image } = photoFileInput;
-      if (image) {
-        const { url } = await this.cloudinaryService.uploadImage(image);
+      if (photoFileInput) {
+        const { url } = await this.cloudinaryService.uploadImage(
+          photoFileInput,
+        );
         updateProfileInput.photo = url;
       }
       return await this.profilesRepository.save({

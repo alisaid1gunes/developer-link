@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
-import toStream = require('buffer-to-stream');
 import { FileUpload } from 'graphql-upload';
 @Injectable()
 export class CloudinaryService {
   async uploadImage(
     file: FileUpload,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const upload = v2.uploader.upload_stream((error, result) => {
         if (error) return reject(error);
         resolve(result);
       });
-      const buffer = file.createReadStream();
-      toStream(buffer)
+      const { createReadStream } = await file;
+
+      createReadStream()
         .pipe(upload)
-        .onError((error) => reject(error));
+        .on('error', (err) => reject(err));
     });
   }
 }

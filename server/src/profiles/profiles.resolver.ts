@@ -3,7 +3,7 @@ import { ProfilesService } from './profiles.service';
 import { Profile } from './entities/profile.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
-import { PhotoFileInput } from './dto/photo-file.input';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => Profile)
 export class ProfilesResolver {
@@ -12,9 +12,9 @@ export class ProfilesResolver {
   @Mutation(() => Profile)
   createProfile(
     @Args('createProfileInput') createProfileInput: CreateProfileInput,
-    @Args('updateProfileInput') photoFileInput: PhotoFileInput,
+    @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
   ) {
-    return this.profilesService.create(createProfileInput, photoFileInput);
+    return this.profilesService.create(createProfileInput, file);
   }
 
   @Query(() => [Profile], { name: 'profiles' })
@@ -31,9 +31,9 @@ export class ProfilesResolver {
   updateProfile(
     @Args('id', { type: () => Int }) id: number,
     @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
-    @Args('updateProfileInput') photoFileInput: PhotoFileInput,
+    @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
   ) {
-    return this.profilesService.update(id, updateProfileInput, photoFileInput);
+    return this.profilesService.update(id, updateProfileInput, file);
   }
 
   @Mutation(() => Profile)

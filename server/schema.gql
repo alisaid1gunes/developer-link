@@ -308,8 +308,8 @@ type Mutation {
   createStatistic(createStatisticInput: CreateStatisticInput!): Statistic!
   updateStatistic(updateStatisticInput: UpdateStatisticInput!): Statistic!
   removeStatistic(id: Int!): Statistic!
-  createProfile(createProfileInput: CreateProfileInput!, updateProfileInput: PhotoFileInput!): Profile!
-  updateProfile(id: Int!, updateProfileInput: PhotoFileInput!): Profile!
+  createProfile(createProfileInput: CreateProfileInput!, file: Upload!): Profile!
+  updateProfile(id: Int!, updateProfileInput: UpdateProfileInput!, file: Upload!): Profile!
   removeProfile(id: Int!): Profile!
 }
 
@@ -375,6 +375,26 @@ input UpdateStatisticInput {
 }
 
 input CreateProfileInput {
+  """firstName of the user"""
+  firstName: String
+
+  """lastName of the user"""
+  lastName: String
+
+  """profile photo"""
+  photo: String
+
+  """user biography"""
+  bio: String
+
+  """user profile title"""
+  profileTitle: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UpdateProfileInput {
   """firstName of the user"""
   firstName: String
 
