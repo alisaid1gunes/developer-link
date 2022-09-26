@@ -4,6 +4,8 @@ import { Profile } from './entities/profile.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { UseGuards } from '@nestjs/common';
+import { AccessTokenGuard } from '../common/guards/accessToken.guard';
 
 @Resolver(() => Profile)
 export class ProfilesResolver {
@@ -21,7 +23,7 @@ export class ProfilesResolver {
   findAll() {
     return this.profilesService.findAll();
   }
-
+  @UseGuards(AccessTokenGuard)
   @Query(() => Profile, { name: 'profile' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.profilesService.findOne(id);

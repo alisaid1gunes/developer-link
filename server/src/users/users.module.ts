@@ -3,11 +3,12 @@ import { UsersService } from './users.service';
 import { UsersResolver } from './users.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { RefreshToken } from './entities/refreshtoken.entity';
+import { AuthModule } from '../auth/auth.module';
+import { RefreshToken } from '../refreshtokens/entities/refreshtoken.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, RefreshToken])],
+  imports: [TypeOrmModule.forFeature([User, RefreshToken]), AuthModule],
   providers: [UsersResolver, UsersService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, UsersService],
 })
 export class UsersModule {}

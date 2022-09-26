@@ -8,7 +8,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
-import { RefreshToken } from './users/entities/refreshtoken.entity';
 import { LinksModule } from './links/links.module';
 import { Link } from './links/entities/link.entity';
 import { StatisticsModule } from './statistics/statistics.module';
@@ -19,6 +18,9 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { Profile } from './profiles/entities/profile.entity';
 import { graphqlUploadExpress } from 'graphql-upload';
+import { AuthModule } from './auth/auth.module';
+import { RefreshtokensModule } from './refreshtokens/refreshtokens.module';
+import { RefreshToken } from './refreshtokens/entities/refreshtoken.entity';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { graphqlUploadExpress } from 'graphql-upload';
     StatisticsModule,
     CloudinaryModule,
     ProfilesModule,
+    AuthModule,
+    RefreshtokensModule,
     ConfigModule.forRoot({ load: [configuration] }),
     TypeOrmModule.forRoot({
       type: 'postgres',

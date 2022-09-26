@@ -1,33 +1,47 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { SignUpInput } from './dto/signup.input';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private recipesRepository: Repository<User>,
+    private userRepository: Repository<User>,
   ) {}
-  create(createUserInput: CreateUserInput) {
-    return this.recipesRepository.save(createUserInput);
+  async create(signUpInput: SignUpInput) {
+    return await this.userRepository.save(signUpInput);
   }
 
-  findAll() {
-    return this.recipesRepository.find();
+  async findAll() {
+    return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return this.recipesRepository.findOneById(id);
+  async findOne(id: number) {
+    return await this.userRepository.findOneById(id);
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    const user = this.recipesRepository.findOneById(id);
-    return this.recipesRepository.save({ ...user, ...updateUserInput });
+  async findByUsername(username: string) {
+    return await this.userRepository.findOne({ where: { username } });
   }
 
-  remove(id: number) {
-    return this.recipesRepository.delete(id);
+  async findByEmail(email: string) {
+    return await this.userRepository.findOne({ where: { email } });
+  }
+
+  async update(id: number, updateUserInput: UpdateUserInput) {
+    const user: User = new User();
+    Object.assign(user, updateUserInput);
+    await this.userRepository.update(id, user);
+  }
+  async findOneWithRefreshTokens(id: number) {
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: ['refreshToken'],
+    });
+  }
+  async remove(id: number) {
+    return await this.userRepository.delete(id);
   }
 }

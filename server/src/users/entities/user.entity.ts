@@ -9,10 +9,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { RefreshToken } from './refreshtoken.entity';
 import { Link } from '../../links/entities/link.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Profile } from '../../profiles/entities/profile.entity';
+import { RefreshToken } from '../../refreshtokens/entities/refreshtoken.entity';
 
 @ObjectType()
 @InputType('US')
@@ -49,8 +49,7 @@ export class User {
     description: 'user refresh token',
     nullable: true,
   })
-  @OneToOne(() => RefreshToken)
-  @JoinColumn()
+  @OneToOne(() => RefreshToken, (refreshToken) => refreshToken.user)
   refreshToken?: RefreshToken;
 
   @ApiProperty()

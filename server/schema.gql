@@ -2,14 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type RefreshToken {
-  """Id of the entity"""
-  id: Int!
-
-  """token of the entity"""
-  token: String!
-}
-
 type Link {
   """id of the link"""
   id: Int!
@@ -70,6 +62,14 @@ type Profile {
   updatedAt: DateTime!
 }
 
+type RefreshToken {
+  """Id of the entity"""
+  id: Int!
+
+  """token of the entity"""
+  token: String!
+}
+
 type User {
   """Id of the entity"""
   id: Int!
@@ -97,6 +97,11 @@ type User {
 
   """update date of the entity"""
   updatedAt: DateTime!
+}
+
+type TokensDto {
+  accessToken: String!
+  refreshToken: String!
 }
 
 type View {
@@ -145,14 +150,6 @@ type Statistic {
 
   """update date of the statistic"""
   updatedAt: DateTime!
-}
-
-input REF {
-  """Id of the entity"""
-  id: Int!
-
-  """token of the entity"""
-  token: String!
 }
 
 input LIN {
@@ -208,6 +205,14 @@ input PR {
 
   """user profile update date"""
   updatedAt: DateTime!
+}
+
+input REF {
+  """Id of the entity"""
+  id: Int!
+
+  """token of the entity"""
+  token: String!
 }
 
 input US {
@@ -290,6 +295,8 @@ input ST {
 type Query {
   users: [User!]!
   user(id: Int!): User!
+  refreshtokens: [RefreshToken!]!
+  refreshtoken(id: Int!): RefreshToken!
   links: [Link!]!
   link(id: Int!): Link!
   statistics: [Statistic!]!
@@ -299,9 +306,14 @@ type Query {
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
+  signUp(signUpInput: SignUpInput!): TokensDto!
+  logIn(logInInput: LogInInput!): TokensDto!
+  logOut(logOutInput: LogOutInput!): Boolean!
+  refresh(refreshInput: RefreshInput!): TokensDto!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createRefreshtoken(createRefreshtokenInput: CreateRefreshtokenInput!): RefreshToken!
+  removeRefreshtoken(id: Int!): RefreshToken!
   createLink(createLinkInput: PhotoFileInput!): Link!
   updateLink(id: Int!, updateLinkInput: UpdateLinkInput!, photoFileInput: PhotoFileInput!): Link!
   removeLink(id: Int!): Link!
@@ -313,7 +325,7 @@ type Mutation {
   removeProfile(id: Int!): Profile!
 }
 
-input CreateUserInput {
+input SignUpInput {
   """username of the entity"""
   username: String!
 
@@ -324,12 +336,47 @@ input CreateUserInput {
   password: String!
 }
 
+input LogInInput {
+  """username of the entity"""
+  username: String!
+
+  """Email of the entity"""
+  email: String!
+
+  """Password of the entity"""
+  password: String!
+}
+
+input LogOutInput {
+  """user id"""
+  userId: Int!
+}
+
+input RefreshInput {
+  """user id"""
+  userId: Int!
+
+  """user id"""
+  token: String!
+}
+
 input UpdateUserInput {
   """username of the user"""
   username: String
 
   """email of the user"""
   email: String
+
+  """refreshToken of the user"""
+  refreshToken: REF
+}
+
+input CreateRefreshtokenInput {
+  """token"""
+  token: String!
+
+  """token"""
+  user: US!
 }
 
 input PhotoFileInput {

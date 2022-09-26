@@ -1,6 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 @InputType('REF')
@@ -15,4 +22,10 @@ export class RefreshToken {
   @Field(() => String, { description: 'token of the entity' })
   @Column()
   token: string;
+
+  @OneToOne(() => User, (user) => user.refreshToken, {
+    cascade: true,
+  })
+  @JoinColumn()
+  user?: User;
 }

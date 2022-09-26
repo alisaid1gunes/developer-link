@@ -1,6 +1,7 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsEmail, MinLength } from 'class-validator';
+import { IsEmail, IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RefreshToken } from '../../refreshtokens/entities/refreshtoken.entity';
 
 @InputType()
 export class UpdateUserInput {
@@ -13,4 +14,12 @@ export class UpdateUserInput {
   @IsEmail()
   @Field(() => String, { description: 'email of the user', nullable: true })
   email?: string;
+
+  @ApiProperty()
+  @IsString()
+  @Field(() => RefreshToken, {
+    description: 'refreshToken of the user',
+    nullable: true,
+  })
+  refreshToken?: RefreshToken;
 }
