@@ -47,6 +47,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "pg": "^8.8.0",
+    "react-router-dom": "6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "run-script-webpack-plugin": "^0.1.1",
