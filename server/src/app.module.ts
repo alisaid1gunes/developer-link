@@ -52,6 +52,6 @@ import { RefreshToken } from './refreshtokens/entities/refreshtoken.entity';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(graphqlUploadExpress()).forRoutes('graphql');
+    consumer.apply(graphqlUploadExpress()).forRoutes('services');
   }
 }
