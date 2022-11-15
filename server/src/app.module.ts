@@ -19,8 +19,8 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { Profile } from './profiles/entities/profile.entity';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { AuthModule } from './auth/auth.module';
-import { RefreshtokensModule } from './refreshtokens/refreshtokens.module';
 import { RefreshToken } from './refreshtokens/entities/refreshtoken.entity';
+import { RefreshtokensModule } from './refreshtokens/refreshtokens.module';
 
 @Module({
   imports: [
