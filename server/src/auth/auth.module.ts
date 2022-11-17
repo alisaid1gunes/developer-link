@@ -5,14 +5,24 @@ import { AccessTokenStrategy } from './strategies/accessToken.strategy';
 import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
 import { UsersModule } from '../users/users.module';
 import { RefreshtokensModule } from '../refreshtokens/refreshtokens.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../users/entities/user.entity';
+import { RefreshToken } from '../refreshtokens/entities/refreshtoken.entity';
+import { RefreshTokensService } from '../refreshtokens/refreshtokens.service';
 
 @Module({
   imports: [
     JwtModule.register({}),
     forwardRef(() => UsersModule),
-    RefreshtokensModule,
+    forwardRef(() => RefreshtokensModule),
+    TypeOrmModule.forFeature([User, RefreshToken]),
   ],
-  providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],
+  providers: [
+    AuthService,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+    RefreshTokensService,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

@@ -41,6 +41,12 @@ import { RefreshtokensModule } from './refreshtokens/refreshtokens.module';
       database: configuration().database.name,
       entities: [User, Profile, RefreshToken, Link, Statistic, View, Click],
       synchronize: true,
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

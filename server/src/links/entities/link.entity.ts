@@ -3,12 +3,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Statistic } from '../../statistics/entities/statistic.entity';
 
 @ObjectType()
 @InputType('LIN')
@@ -48,6 +51,12 @@ export class Link {
   @Field(() => User, { description: 'user of the link' })
   @ManyToOne(() => User, (user) => user.links)
   user: User;
+
+  @ApiProperty()
+  @Field(() => Statistic, { description: 'link statistic', nullable: true })
+  @OneToOne(() => Statistic)
+  @JoinColumn()
+  statistic?: Statistic;
 
   @ApiProperty()
   @Field(() => Date, { description: 'create date of the link' })

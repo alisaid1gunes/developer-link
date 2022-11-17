@@ -11,6 +11,8 @@ async function bootstrap() {
   app.use(urlencoded({ extended: true, limit: '50mb' }));
   await app.listen(configuration().port);
 
+  console.log(`Server running on port ${configuration().port}`);
+
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());

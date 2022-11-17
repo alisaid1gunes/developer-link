@@ -2,6 +2,59 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type View {
+  """id of the view"""
+  id: Int!
+
+  """date of the view"""
+  date: DateTime!
+
+  """Statistic of the view"""
+  statistic: Link!
+
+  """create date of the view"""
+  createdAt: DateTime!
+
+  """update date of the view"""
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Click {
+  """id of the click"""
+  id: Int!
+
+  """date of the click"""
+  clickDate: DateTime!
+
+  """create date of the click"""
+  createdAt: DateTime!
+
+  """update date of the click"""
+  updatedAt: DateTime!
+}
+
+type Statistic {
+  """id of the statistic"""
+  id: Int!
+
+  """views of the statistic"""
+  views: [View!]
+
+  """clicks of the statistic"""
+  clicks: [Click!]
+
+  """create date of the statistic"""
+  createdAt: DateTime!
+
+  """update date of the statistic"""
+  updatedAt: DateTime!
+}
+
 type Link {
   """id of the link"""
   id: Int!
@@ -24,17 +77,15 @@ type Link {
   """user of the link"""
   user: User!
 
+  """link statistic"""
+  statistic: Statistic
+
   """create date of the link"""
   createdAt: DateTime!
 
   """update date of the link"""
   updatedAt: DateTime!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type Profile {
   """Id of the profile"""
@@ -104,7 +155,7 @@ type TokensDto {
   refreshToken: String!
 }
 
-type View {
+input VI {
   """id of the view"""
   id: Int!
 
@@ -112,7 +163,7 @@ type View {
   date: DateTime!
 
   """Statistic of the view"""
-  statistic: Link!
+  statistic: LIN!
 
   """create date of the view"""
   createdAt: DateTime!
@@ -121,7 +172,7 @@ type View {
   updatedAt: DateTime!
 }
 
-type Click {
+input CL {
   """id of the click"""
   id: Int!
 
@@ -135,15 +186,15 @@ type Click {
   updatedAt: DateTime!
 }
 
-type Statistic {
+input ST {
   """id of the statistic"""
   id: Int!
 
   """views of the statistic"""
-  views: [View!]
+  views: [VI!]
 
   """clicks of the statistic"""
-  clicks: [Click!]
+  clicks: [CL!]
 
   """create date of the statistic"""
   createdAt: DateTime!
@@ -173,6 +224,9 @@ input LIN {
 
   """user of the link"""
   user: US!
+
+  """link statistic"""
+  statistic: ST
 
   """create date of the link"""
   createdAt: DateTime!
@@ -241,54 +295,6 @@ input US {
   createdAt: DateTime!
 
   """update date of the entity"""
-  updatedAt: DateTime!
-}
-
-input VI {
-  """id of the view"""
-  id: Int!
-
-  """date of the view"""
-  date: DateTime!
-
-  """Statistic of the view"""
-  statistic: LIN!
-
-  """create date of the view"""
-  createdAt: DateTime!
-
-  """update date of the view"""
-  updatedAt: DateTime!
-}
-
-input CL {
-  """id of the click"""
-  id: Int!
-
-  """date of the click"""
-  clickDate: DateTime!
-
-  """create date of the click"""
-  createdAt: DateTime!
-
-  """update date of the click"""
-  updatedAt: DateTime!
-}
-
-input ST {
-  """id of the statistic"""
-  id: Int!
-
-  """views of the statistic"""
-  views: [VI!]
-
-  """clicks of the statistic"""
-  clicks: [CL!]
-
-  """create date of the statistic"""
-  createdAt: DateTime!
-
-  """update date of the statistic"""
   updatedAt: DateTime!
 }
 

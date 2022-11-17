@@ -21,8 +21,9 @@ export class AuthService {
   constructor(
     @Inject(forwardRef(() => UsersService))
     private usersService: UsersService,
-    private jwtService: JwtService,
+    @Inject(forwardRef(() => RefreshTokensService))
     private refreshTokensService: RefreshTokensService,
+    private jwtService: JwtService,
   ) {}
   async signUp(createUserInput: SignUpInput): Promise<any> {
     const userExists = await this.usersService.findByUsername(
